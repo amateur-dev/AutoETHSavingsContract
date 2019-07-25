@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import getWeb3 from "./utils/getWeb3";
+import Routes from "./Routes";
+import Counter from "./utils/TestComponent";
+import HomeComponent from "./utils/HomeComponent";
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 import "./App.css";
 
@@ -102,14 +106,18 @@ class App extends Component {
 
 
   render() {
-    if (!this.state.web3) {
-      return <div>Loading Web3, accounts, and contract...</div>;
-    }
+    // if (!this.state.web3) {
+    //   return <div>Loading Web3, accounts, and contract...</div>;
+    // }
     return (
       <div className="App">
-        <h1>Good to Go!</h1>
-        <h2>Would you like to depoly your Petty Cash Savings Smart Contract</h2>
-        <button onClick={this.deployContract}>Submit</button>
+      <Routes />
+        
+        
+        {/* <Counter /> */}
+        
+        {/* <h2>Would you like to depoly your Petty Cash Savings Smart Contract</h2>
+        <button onClick={this.deployContract}>Submit</button> */}
         {/* <form onSubmit={this.deployContract}>
           <input type="submit" value="Submit"/>
         </form> */}
@@ -133,6 +141,7 @@ class App extends Component {
 
         <div>The stored value is: {this.state.storageValue}</div> */}
       </div>
+      
     );
   }
 }

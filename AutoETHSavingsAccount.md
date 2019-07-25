@@ -1,4 +1,4 @@
-# AutoSavingsAccount
+# AutoETHSavingsAccount
 
 ##  About the DAPP
 

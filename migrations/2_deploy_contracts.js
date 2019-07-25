@@ -1,5 +1,5 @@
-var SimpleStorage = artifacts.require("./SimpleStorage.sol");
+var AutoETHSavingsAccount = artifacts.require("./AutoETHSavingsAccount.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(SimpleStorage);
+  deployer.deploy(AutoETHSavingsAccount);
 };

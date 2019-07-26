@@ -15,15 +15,28 @@ import getWeb3 from "../utils/getWeb3";
 class FirstPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { contractAddress:null };
+    this.state = { contractAddress:null, clicked:false };
     // this.state = { storageValue: "No value has been set", web3: null, accounts: null, contract: null };
 
     // this.handleChange = this.handleChange.bind(this);
     // this.deployContract = this.deployContract.bind(this);
     // this.handleSubmit = this.handleSubmit.bind(this);
+    this.showHi = this.showHi.bind(this);
   }
   // state = { storageValue: null, web3: null, accounts: null, contract: null };
 
+  showHi = async (event) => {
+    const url = "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd";
+    await fetch(url).then((resp) => resp.json()).then((data) => {
+      const {usd:USD} = data.ethereum ||  {};
+      if (USD == null) {
+        throw new Error("There is no value for USD")
+      } else {
+        console.log(USD)
+      }
+    });
+
+  }
 
   deployContract = async (event) => {
     event.preventDefault();
@@ -75,7 +88,7 @@ class FirstPage extends Component {
       const networkId = await web3.eth.net.getId();
       console.log(networkId);
       const deployedNetwork = AutoETHSavingsAccount.networks[networkId];
-      console.log(AutoETHSavingsAccount)  // this pulls out the object of the contract which gives the contract storage address and etc
+      // console.log(AutoETHSavingsAccount)  // this pulls out the object of the contract which gives the contract storage address and etc
       console.log(AutoETHSavingsAccount.networks[networkId].address)
       this.setState({contractAddress: AutoETHSavingsAccount.networks[networkId].address})
       const instance = new web3.eth.Contract(
@@ -130,6 +143,9 @@ class FirstPage extends Component {
     return (
       <div className="App">
         { this.renderContractAddress()}
+        <button onClick={this.showHi}>Submit</button>
+        {this.state.clicked ? (<p>Hi there!</p>) : null }
+
         {/* <Counter /> */}
         
         {/* <h2>Would you like to depoly your Petty Cash Savings Smart Contract</h2>

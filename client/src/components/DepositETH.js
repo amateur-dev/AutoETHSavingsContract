@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import AutoETHSavingsAccount from "../contracts/AutoETHSavingsAccount.json";
 import web3 from "../utils/getWeb3";
+import autoBind from 'react-autobind';
 
 class DepositETH extends Component {
     constructor(props) {
         super(props);
-        this.DepositETH = this.DepositETH.bind(this);
+        this.state = { depositTxHash: null };
+        autoBind(this);
     }
 
 
@@ -22,6 +24,9 @@ class DepositETH extends Component {
 
     }
 
+    handleFormSubmit(event) {
+        event.preventDefault();
+    }
 
 
     DepositETH = async (event) => {
@@ -40,7 +45,8 @@ class DepositETH extends Component {
         );
         const contract = instance;
         console.log("We got the instance and now calling the deposit ETH method")
-        await contract.methods.depositETH().send({ from: account, value: web3.utils.toWei('1', 'ether') }).on('transactionHash', (transactionHash) => console.log("transactionhash is ", transactionHash))
+        const depositETHAmount = this.refs.depositETHAmount.value;
+        await contract.methods.depositETH().send({ from: account, value: web3.utils.toWei(depositETHAmount, 'ether') }).on('transactionHash', (transactionHash) => this.setState({ depositTxHash: transactionHash }))
 
         // console.log(accounts[0])
         // await new web3.eth.Contract(AutoETHSavingsAccount.abi).deploy({
@@ -126,7 +132,17 @@ class DepositETH extends Component {
         // }
         return (
             <div>
-                <button onClick={this.DepositETH}>DepositETH</button>
+                <form onSubmit={this.DepositETH}>
+                    <label>
+                        Amount in ETH: <input type="number" step="0.01" ref="depositETHAmount" />
+                    </label>
+                    <input type="submit" value="Deposit ETH" />
+                </form>
+
+                {/* <button >DepositETH</button> */}
+                {this.state.depositTxHash !== null ? (<p>
+                    The Deposit Tx Hash is {this.state.depositTxHash}
+                </p>) : null}
             </div>
 
         );

@@ -123,6 +123,8 @@ class FirstPage extends Component {
           <div>
             <CA contractAddress={this.state.contractAddress} />
             <DepositETH networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
+            {/* <DepositETH networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
+            <DepositETH networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} /> */}
           </div>
 
           : null}

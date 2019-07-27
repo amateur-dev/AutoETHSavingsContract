@@ -6,7 +6,7 @@ import getWeb3 from "../utils/getWeb3";
 class WelcomePage extends Component {
     constructor(props) {
         super(props);
-        this.state = { contractAddress: null, clicked: false, txHash: null, web3: null, accounts: null, hasContractAddress: false };
+        this.state = { contractAddress: null, clicked: false, txHash: null, web3: null, accounts: null, hasContractAddress: false, dummytext: "test" };
         // this.showHi = this.showHi.bind(this);
     }
 
@@ -14,6 +14,7 @@ class WelcomePage extends Component {
         try {
             // Get network provider and web3 instance.
             const web3 = await getWeb3();
+            console.log(web3)
 
             // Use web3 to get the user's accounts.
             const Allaccounts = await web3.eth.getAccounts();
@@ -48,8 +49,8 @@ class WelcomePage extends Component {
                 <h5 id="depolyment-of-contract">Depolyment of Contract</h5>
                 <p>At the <mark><strong><Link to={{
                     pathname: "/FirstPage", state: {
-                        accounts: this.state.accounts
-                    }
+                        accounts: this.state.accounts,
+                    },
                 }}>First page</Link></strong></mark>, you will see a button with says <mark><code>deploy contract</code></mark>.  Using this button will deploy the contract for you.  Here is a link to the contract [DIPESH TO INSERT THE LINK TO THE CONTRACT].  You will be notified of the address of the Smart Contract.  As an option, you will also see another button on the home page <code>Connect to Existing AutoSavingsAccount Smart Contract</code> -&gt; more on this in the following section.</p>
                 <h5 id="adding-your-savings-account-address">Adding your Savings Account Address</h5>
                 <p>Once you have the address of the AutoSavingsAccount, you can visit the page <code>Add Savings Account</code>.  In this page, you can provide the external wallet address that you want any of the savings to be deposited.  While it is recommended that you should only provide the wallet address to which you have a control (ie have access to the private keys), you are free to provide the wallet address of any of your loved ones (eg, spouse, children) etc.  </p>

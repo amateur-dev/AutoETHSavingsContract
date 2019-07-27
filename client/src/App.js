@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Routes from "./Routes";
+import getWeb3 from "./utils/getWeb3";
 
 import "./App.css";
 

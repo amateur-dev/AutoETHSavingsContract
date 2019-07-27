@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import AutoETHSavingsAccount from "../contracts/AutoETHSavingsAccount.json";
 import getWeb3 from "../utils/getWeb3";
 import CA from "./ContractAddress"
+import SecondPage from "./SecondPage"
 
 class FirstPage extends Component {
   constructor(props) {
@@ -150,14 +151,18 @@ class FirstPage extends Component {
         {this.state.clicked ? (<p>Hi there!</p>) : null} */}
 
         {/* <Counter /> */}
+        <p>Until, I configure this DAPP properly, I request you to refresh this page after loading. I need to make some changes to the code so that the refersh requirement is removed</p>
 
         <h2>Would you like to depoly your Petty Cash Savings Smart Contract</h2>
         <button onClick={this.deployContract}>Submit</button>
         {this.state.hasContractAddress ?
-
-          <CA contractAddress={this.state.contractAddress} />
+          <div>
+            <CA contractAddress={this.state.contractAddress} />
+            <SecondPage />
+          </div>
 
           : null}
+
         {/* <form onSubmit={this.deployContract}>
           <input type="submit" value="Submit"/>
         </form> */}

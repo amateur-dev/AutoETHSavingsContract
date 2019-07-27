@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import autoBind from 'react-autobind';
 import AutoETHSavingsAccount from "../contracts/AutoETHSavingsAccount.json";
-import getWeb3 from "../utils/getWeb3";
+import web3 from "../utils/getWeb3";
 import CA from "./ContractAddress"
 import DepositETH from "./DepositETH"
 
@@ -9,12 +9,6 @@ class FirstPage extends Component {
   constructor(props) {
     super(props);
     this.state = { contractAddress: null, clicked: false, txHash: null, hasContractAddress: false, web3: null };
-    // this.state = { storageValue: "No value has been set", web3: null, accounts: null, contract: null, , accounts: null };
-
-    // this.handleChange = this.handleChange.bind(this);
-    // this.deployContract = this.deployContract.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
-    // this.showHi = this.showHi.bind(this);
     autoBind(this);
   }
 
@@ -37,8 +31,8 @@ class FirstPage extends Component {
   deployContract = async (event) => {
     event.preventDefault();
     console.log('calling the deploy contract fx');
-    const web3 = this.state.web3;
-    console.log(web3)
+    web3 = await web3;
+    // console.log(web3)
     console.log("deploying the contract");
     const accounts = this.props.location.state.accounts;
     // console.log(accounts[0])
@@ -81,43 +75,7 @@ class FirstPage extends Component {
   //   event.preventDefault();
   // }
 
-  componentDidMount = async () => {
-    console.log("ComponentDidMount is working")
-    try {
-      // Get network provider and web3 instance.
-      console.log("getting the web3")
-      const web3 = await getWeb3();
-      console.log("we have been able to get web3", web3)
 
-
-      // Use web3 to get the user's accounts.
-      const accounts = await web3.eth.getAccounts();
-      console.log(accounts);
-
-      // Get the contract instance.
-      const networkId = await web3.eth.net.getId();
-      console.log(networkId);
-      // const deployedNetwork = AutoETHSavingsAccount.networks[networkId];
-      // // console.log(AutoETHSavingsAccount)  // this pulls out the object of the contract which gives the contract storage address and etc
-      // console.log(AutoETHSavingsAccount.networks[networkId].address)
-      // this.setState({ contractAddress: AutoETHSavingsAccount.networks[networkId].address })
-      // const instance = new web3.eth.Contract(
-      //   AutoETHSavingsAccount.abi,
-      //   deployedNetwork && deployedNetwork.address,
-      // );
-      // console.log(instance)
-
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
-      this.setState({ web3, accounts });
-    } catch (error) {
-      // Catch any errors for any of the above operations.
-      alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`,
-      );
-      console.error(error);
-    }
-  };
 
   renderContractAddress = () => {
     if (this.state.contractAddress !== null) {
@@ -164,7 +122,7 @@ class FirstPage extends Component {
         {this.state.hasContractAddress ?
           <div>
             <CA contractAddress={this.state.contractAddress} />
-            <DepositETH web3={this.state.web3} contractAddress={this.state.contractAddress} />
+            <DepositETH networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
           </div>
 
           : null}

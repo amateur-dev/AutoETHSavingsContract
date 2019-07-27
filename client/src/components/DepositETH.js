@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AutoETHSavingsAccount from "../contracts/AutoETHSavingsAccount.json";
+import web3 from "../utils/getWeb3";
 
 class DepositETH extends Component {
     constructor(props) {
@@ -26,19 +27,20 @@ class DepositETH extends Component {
     DepositETH = async (event) => {
         event.preventDefault();
         console.log('calling the DepositETH fx');
-        const web3 = this.props.web3;
-        console.log(web3)
-        const accounts = await web3.eth.getAccounts();
-        console.log(accounts)
-        const networkId = await web3.eth.net.getId();
-        console.log(networkId)
+        web3 = await web3;
+        // console.log(web3)
+        const account = this.props.accounts;
+        console.log("accounts are ", account)
+        const networkId = this.props.networkId;
+        console.log("network ID is", networkId)
         const deployedNetwork = AutoETHSavingsAccount.networks[networkId];
         const instance = new web3.eth.Contract(
             AutoETHSavingsAccount.abi,
             deployedNetwork && this.props.contractAddress,
         );
         const contract = instance;
-        await contract.methods.depositETH().send({ from: accounts[0], value: web3.utils.toWei('1', 'ether') })
+        console.log("We got the instance and now calling the deposit ETH method")
+        await contract.methods.depositETH().send({ from: account, value: web3.utils.toWei('1', 'ether') }).on('transactionHash', (transactionHash) => console.log("transactionhash is ", transactionHash))
 
         // console.log(accounts[0])
         // await new web3.eth.Contract(AutoETHSavingsAccount.abi).deploy({

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Link } from 'react-router-dom';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 
-class HomeComponent extends Component {
+class Counter extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,14 +33,12 @@ class HomeComponent extends Component {
   render() {
     return (
       <div>
-        {/* <button className='inc' onClick={this.increment}>Increment!</button>
-          <button className='dec' onClick={this.decrement}>Decrement!</button>
-          <button className='reset' onClick={this.reset}>Reset</button> */}
-        <h1>Home Component</h1>
-        <Link to="/Counter">Counter</Link>
+
+        The Contract Address is {this.props.contractAddress}
+
       </div>
     );
   }
 };
 
-export default HomeComponent;
+export default Counter;

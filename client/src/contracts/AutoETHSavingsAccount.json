@@ -8776,12 +8776,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xb021847E1f2C7B56976c49Dd09Dd5F3f37d3F185",
-      "transactionHash": "0x18df3d5c8f40b5335f8dd80c8a978fa970fd140a92a6353d45b89c20734feafe"
+      "address": "0x980FC3699ffD829d9A7dFe2E02c84E480Ee3E016",
+      "transactionHash": "0xa2e7261b56cf8562a38c285307a41aa4b3394364432392c2360a5fc0755a98a9"
     }
   },
-  "schemaVersion": "3.0.11",
-  "updatedAt": "2019-07-25T08:57:44.156Z",
+  "schemaVersion": "3.0.10",
+  "updatedAt": "2019-07-26T13:33:37.651Z",
   "devdoc": {
     "methods": {}
   },

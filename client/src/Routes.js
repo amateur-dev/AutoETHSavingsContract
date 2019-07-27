@@ -3,7 +3,7 @@ import React, { Component } from "react";
 // import getWeb3 from "./utils/getWeb3";
 import WelcomePage from "./components/WelcomePage"
 import FirstPage from "./components/FirstPage";
-import SecondPage from "./components/SecondPage";
+import DepositETH from "./components/DepositETH";
 import NotFound from "./components/NotFound";
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
@@ -16,7 +16,6 @@ class Routes extends Component {
                     <Switch>
                         <Route name="WelcomePage" path="/" exact component={WelcomePage} />
                         <Route name="FirstPage" path="/FirstPage" exact component={FirstPage} />
-                        <Route name="SecondPage" path="/SecondPage" exact component={SecondPage} />
                         <Route component={NotFound} />
                     </Switch>
                 </BrowserRouter>

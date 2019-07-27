@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import AutoETHSavingsAccount from "../contracts/AutoETHSavingsAccount.json";
-import getWeb3 from "../utils/getWeb3";
 
-class SecondPage extends Component {
+class DepositETH extends Component {
     constructor(props) {
         super(props);
         this.DepositETH = this.DepositETH.bind(this);
@@ -27,7 +26,7 @@ class SecondPage extends Component {
     DepositETH = async (event) => {
         event.preventDefault();
         console.log('calling the DepositETH fx');
-        const web3 = await getWeb3();
+        const web3 = this.props.web3;
         console.log(web3)
         const accounts = await web3.eth.getAccounts();
         console.log(accounts)
@@ -36,7 +35,7 @@ class SecondPage extends Component {
         const deployedNetwork = AutoETHSavingsAccount.networks[networkId];
         const instance = new web3.eth.Contract(
             AutoETHSavingsAccount.abi,
-            deployedNetwork && this.state.contractAddress,
+            deployedNetwork && this.props.contractAddress,
         );
         const contract = instance;
         await contract.methods.depositETH().send({ from: accounts[0], value: web3.utils.toWei('1', 'ether') })
@@ -60,36 +59,36 @@ class SecondPage extends Component {
 
 
 
-    componentDidMount = async () => {
-        try {
-            // Get network provider and web3 instance.
-            const web3 = await getWeb3();
+    // componentDidMount = async () => {
+    //     try {
+    //         // Get network provider and web3 instance.
+    //         const web3 = await getWeb3();
 
-            // Use web3 to get the user's accounts.
-            const accounts = await web3.eth.getAccounts();
-            console.log(accounts);
+    //         // Use web3 to get the user's accounts.
+    //         const accounts = await web3.eth.getAccounts();
+    //         console.log(accounts);
 
-            // Get the contract instance.
-            const networkId = await web3.eth.net.getId();
-            console.log(networkId);
-            // const deployedNetwork = AutoETHSavingsAccount.networks[networkId];
-            // const instance = new web3.eth.Contract(
-            //   AutoETHSavingsAccount.abi,
-            //   deployedNetwork && deployedNetwork.address,
-            // );
-            // console.log(instance)
+    //         // Get the contract instance.
+    //         const networkId = await web3.eth.net.getId();
+    //         console.log(networkId);
+    //         // const deployedNetwork = AutoETHSavingsAccount.networks[networkId];
+    //         // const instance = new web3.eth.Contract(
+    //         //   AutoETHSavingsAccount.abi,
+    //         //   deployedNetwork && deployedNetwork.address,
+    //         // );
+    //         // console.log(instance)
 
-            // Set web3, accounts, and contract to the state, and then proceed with an
-            // example of interacting with the contract's methods.
-            this.setState({ web3, accounts });
-        } catch (error) {
-            // Catch any errors for any of the above operations.
-            alert(
-                `Failed to load web3, accounts, or contract. Check console for details.`,
-            );
-            console.error(error);
-        }
-    };
+    //         // Set web3, accounts, and contract to the state, and then proceed with an
+    //         // example of interacting with the contract's methods.
+    //         this.setState({ web3, accounts });
+    //     } catch (error) {
+    //         // Catch any errors for any of the above operations.
+    //         alert(
+    //             `Failed to load web3, accounts, or contract. Check console for details.`,
+    //         );
+    //         console.error(error);
+    //     }
+    // };
 
     renderContractAddress = () => {
         if (this.state.contractAddress !== null) {
@@ -132,4 +131,4 @@ class SecondPage extends Component {
     }
 }
 
-export default SecondPage;
+export default DepositETH;

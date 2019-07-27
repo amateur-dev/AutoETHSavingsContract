@@ -1,19 +1,21 @@
 import React, { Component } from "react";
+import autoBind from 'react-autobind';
 import AutoETHSavingsAccount from "../contracts/AutoETHSavingsAccount.json";
 import getWeb3 from "../utils/getWeb3";
 import CA from "./ContractAddress"
-import SecondPage from "./SecondPage"
+import DepositETH from "./DepositETH"
 
 class FirstPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { contractAddress: null, clicked: false, txHash: null, hasContractAddress: false, };
+    this.state = { contractAddress: null, clicked: false, txHash: null, hasContractAddress: false, web3: null };
     // this.state = { storageValue: "No value has been set", web3: null, accounts: null, contract: null, , accounts: null };
 
     // this.handleChange = this.handleChange.bind(this);
-    this.deployContract = this.deployContract.bind(this);
+    // this.deployContract = this.deployContract.bind(this);
     // this.handleSubmit = this.handleSubmit.bind(this);
-    this.showHi = this.showHi.bind(this);
+    // this.showHi = this.showHi.bind(this);
+    autoBind(this);
   }
 
 
@@ -36,6 +38,7 @@ class FirstPage extends Component {
     event.preventDefault();
     console.log('calling the deploy contract fx');
     const web3 = this.state.web3;
+    console.log(web3)
     console.log("deploying the contract");
     const accounts = this.props.location.state.accounts;
     // console.log(accounts[0])
@@ -79,9 +82,13 @@ class FirstPage extends Component {
   // }
 
   componentDidMount = async () => {
+    console.log("ComponentDidMount is working")
     try {
       // Get network provider and web3 instance.
+      console.log("getting the web3")
       const web3 = await getWeb3();
+      console.log("we have been able to get web3", web3)
+
 
       // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
@@ -151,14 +158,13 @@ class FirstPage extends Component {
         {this.state.clicked ? (<p>Hi there!</p>) : null} */}
 
         {/* <Counter /> */}
-        <p>Until, I configure this DAPP properly, I request you to refresh this page after loading. I need to make some changes to the code so that the refersh requirement is removed</p>
 
         <h2>Would you like to depoly your Petty Cash Savings Smart Contract</h2>
         <button onClick={this.deployContract}>Submit</button>
         {this.state.hasContractAddress ?
           <div>
             <CA contractAddress={this.state.contractAddress} />
-            <SecondPage />
+            <DepositETH web3={this.state.web3} contractAddress={this.state.contractAddress} />
           </div>
 
           : null}

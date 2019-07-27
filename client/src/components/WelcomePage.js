@@ -1,19 +1,31 @@
 import React, { Component } from "react";
-import { Link } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import getWeb3 from "../utils/getWeb3";
 
 
 class WelcomePage extends Component {
     constructor(props) {
         super(props);
-        this.state = { contractAddress: null, clicked: false, txHash: null, web3: null, accounts: null, hasContractAddress: false, dummytext: "test" };
+        this.state = { contractAddress: null, clicked: false, txHash: null, web3: null, accounts: null, hasContractAddress: false, dummytext: "test", redirect: false };
         // this.showHi = this.showHi.bind(this);
+    }
+
+    setRedirect = () => {
+        this.setState({
+            redirect: true
+        })
+    }
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return <Redirect to='/FirstPage' />
+        }
     }
 
     componentDidMount = async () => {
         try {
-            // Get network provider and web3 instance.
+
             const web3 = await getWeb3();
+
             console.log(web3)
 
             // Use web3 to get the user's accounts.
@@ -36,6 +48,10 @@ class WelcomePage extends Component {
 
     render() {
         return (
+            // <div>
+            //     {this.renderRedirect()}
+            //     <button onClick={this.setRedirect}>FirstPage</button>
+            // </div>
             <div>
                 <h1 id="autoethsavingsaccount">AutoETHSavingsAccount DAPP</h1>
                 <h2 id="about-the-dapp">About the DAPP</h2>
@@ -47,6 +63,8 @@ class WelcomePage extends Component {
                 <h2 id="how-it-works">How it works</h2>
                 <h4 id="first-time-use">First Time Use</h4>
                 <h5 id="depolyment-of-contract">Depolyment of Contract</h5>
+
+
                 <p>At the <mark><strong><Link to={{
                     pathname: "/FirstPage", state: {
                         accounts: this.state.accounts,
@@ -71,7 +89,7 @@ class WelcomePage extends Component {
                     <li>As of now, you can add only one Savings Account to the Smart Contract.  If I get time, I will update the mechanism for you to add multiple Savings Account and the differential amount is then transferred to these accounts with a much complex logic.  Eg use cases, &#39;Year End Holiday Savings Account&#39;, &#39;Higher Education Savings Account&#39;.</li>
                 </ol>
 
-            </div>
+            </div >
         )
     }
 }

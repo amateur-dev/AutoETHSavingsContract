@@ -1,5 +1,14 @@
 import Web3 from "web3";
 
+// const getWeb3 = async () => {
+//   const provider = await new Web3.providers.HttpProvider(
+//     "http://127.0.0.1:7545"
+//   );
+//   const web3 = new Web3(provider);
+//   console.log("No web3 instance injected, using Local web3.", web3);
+//   return (web3);
+// }
+
 const getWeb3 = async () => {
   const provider = await new Web3.providers.HttpProvider(
     "http://127.0.0.1:7545"
@@ -8,6 +17,8 @@ const getWeb3 = async () => {
   console.log("No web3 instance injected, using Local web3.", web3);
   return (web3);
 }
+
+const web3 = getWeb3();
 
 
 
@@ -45,4 +56,4 @@ const getWeb3 = async () => {
 // });
 
 
-export default getWeb3;
+export default web3;

@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Redirect, Link } from 'react-router-dom';
-import getWeb3 from "../utils/getWeb3";
+import web3 from "../utils/getWeb3";
 
 
 class WelcomePage extends Component {
     constructor(props) {
         super(props);
-        this.state = { contractAddress: null, clicked: false, txHash: null, web3: null, accounts: null, hasContractAddress: false, dummytext: "test", redirect: false };
+        this.state = { networkId: null, contractAddress: null, clicked: false, txHash: null, web3: null, accounts: null, hasContractAddress: false, dummytext: "test", redirect: false };
         // this.showHi = this.showHi.bind(this);
     }
 
@@ -24,10 +24,8 @@ class WelcomePage extends Component {
     componentDidMount = async () => {
         try {
 
-            const web3 = await getWeb3();
-
-            console.log(web3)
-
+            // const web3 = await getWeb3();
+            web3 = await web3;
             // Use web3 to get the user's accounts.
             const Allaccounts = await web3.eth.getAccounts();
             const accounts = Allaccounts[0]
@@ -36,7 +34,7 @@ class WelcomePage extends Component {
             // Get the contract instance.
             const networkId = await web3.eth.net.getId();
             console.log(networkId);
-            this.setState({ web3, accounts });
+            this.setState({ web3, accounts, networkId });
         } catch (error) {
             // Catch any errors for any of the above operations.
             alert(
@@ -68,6 +66,7 @@ class WelcomePage extends Component {
                 <p>At the <mark><strong><Link to={{
                     pathname: "/FirstPage", state: {
                         accounts: this.state.accounts,
+                        networkId: this.state.networkId
                     },
                 }}>First page</Link></strong></mark>, you will see a button with says <mark><code>deploy contract</code></mark>.  Using this button will deploy the contract for you.  Here is a link to the contract [DIPESH TO INSERT THE LINK TO THE CONTRACT].  You will be notified of the address of the Smart Contract.  As an option, you will also see another button on the home page <code>Connect to Existing AutoSavingsAccount Smart Contract</code> -&gt; more on this in the following section.</p>
                 <h5 id="adding-your-savings-account-address">Adding your Savings Account Address</h5>

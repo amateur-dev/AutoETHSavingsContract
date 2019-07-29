@@ -2,9 +2,6 @@ import React, { Component } from "react";
 
 
 class CA extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (

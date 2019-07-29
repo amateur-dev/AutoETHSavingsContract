@@ -3,7 +3,6 @@ import React, { Component } from "react";
 // import getWeb3 from "./utils/getWeb3";
 import WelcomePage from "./components/WelcomePage"
 import FirstPage from "./components/FirstPage";
-import DepositETH from "./components/DepositETH";
 import NotFound from "./components/NotFound";
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 

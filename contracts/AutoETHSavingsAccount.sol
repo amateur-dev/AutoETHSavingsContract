@@ -106,18 +106,19 @@ contract AutoETHSavingsAccount is Ownable, ReentrancyGuard{
     using SafeMath for uint;
     
     // state variables
-    address[] private savingsAccountsArray;
+    // address[] private savingsAccountsArray;
+    address payable private savingsAccount;
     uint public balance;
     
     
-    mapping (string => address payable) accounts; // maps the name of the account to their addresses
+    // mapping (string => address payable) accounts; // maps the name of the account to their addresses
 
     constructor () public {
         // to reconfirm that there is nothing that needs to be set while deploying the contract
     }
     
-    function addSavingsAccounts (string memory _name, address payable _address) onlyOwner public {
-        accounts[_name] = _address;
+    function addSavingsAccounts (address payable _address) onlyOwner public {
+        savingsAccount = _address;
     }
     
     function depositETH() payable public returns (uint) {
@@ -143,10 +144,9 @@ contract AutoETHSavingsAccount is Ownable, ReentrancyGuard{
         }
         
     
-    function savePettyCash(uint _pettyAmount, string memory _name) public {
+    function savePettyCash(uint _pettyAmount) public {
         require (balance > _pettyAmount + 10000000000000000, "the balance held by the Contract not sufficient for the savings account");
-        address payable savingsAccountAddress = accounts[_name];
-        savingsAccountAddress.transfer(_pettyAmount);
+        savingsAccount.transfer(_pettyAmount);
     }
     
     

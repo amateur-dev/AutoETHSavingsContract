@@ -25,8 +25,13 @@ class CheckBalance extends Component {
         );
         const contract = instance;
         console.log("We got the instance and now calling the CheckBalance method")
-        await contract.methods.balance().call({ from: account }).then((result) => this.setState({ WalletBalance: web3.utils.fromWei(result, 'ether') }))
-
+        // await contract.methods.balance().call({ from: account }).then((result) => { this.setState({ WalletBalance: web3.utils.fromWei(result, 'ether') }); console.log(result) })
+        let valueInMilli = null;
+        await contract.methods.balance().call({ from: account }).then((result) => { valueInMilli = web3.utils.fromWei(result, 'milli') })
+        console.log("value in Milli", valueInMilli)
+        let valueInETH = valueInMilli / 1000;
+        this.setState({ WalletBalance: valueInETH })
+        // await contract.methods.balance().call({ from: account }).then((result) => this.setState({ WalletBalance: web3.utils.fromWei(result, 'ether') }))
     };
 
 

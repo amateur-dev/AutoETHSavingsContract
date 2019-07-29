@@ -53,4 +53,4 @@ class AddSavingsAccountAdd extends Component {
     }
 }
 
-export default AddSavingsAccountAdd;
+export { AddSavingsAccountAdd };

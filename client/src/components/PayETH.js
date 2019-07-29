@@ -3,17 +3,17 @@ import AutoETHSavingsAccount from "../contracts/AutoETHSavingsAccount.json";
 import web3 from "../utils/getWeb3";
 import autoBind from 'react-autobind';
 
-class AddSavingsAccountAdd extends Component {
+class PayETH extends Component {
     constructor(props) {
         super(props);
-        this.state = { depositTxHash: null };
+        this.state = { paymentTxHash: null, savingsTxHash: null };
         autoBind(this);
     }
 
 
-    AddSavingsAccountAdd = async (event) => {
+    PayETH = async (event) => {
         event.preventDefault();
-        console.log('calling the AddSavingsAccountAdd fx');
+        console.log('calling the PayETH fx');
         web3 = await web3;
         const account = this.props.accounts;
         console.log("accounts are ", account)
@@ -26,11 +26,18 @@ class AddSavingsAccountAdd extends Component {
         );
         const contract = instance;
         console.log("We got the instance and now calling the AddSavingsAccountAdd method")
-        const SavingsAccountsAdd = this.refs.SavingsAccountsAdd.value;
-        try { await contract.methods.addSavingsAccounts(SavingsAccountsAdd).send({ from: account }).on('transactionHash', (transactionHash) => this.setState({ depositTxHash: transactionHash })).on("error", console.error) }
+        const PayETHAmount = this.refs.PayETHAmount.value;
+        const PayorETHAddress = this.refs.PayorETHAddress.value;
+        const SavETHAmount = PayETHAmount * 0.01;
+        console.log(SavETHAmount, typeof SavETHAmount);
+        try { await contract.methods.payETH(PayorETHAddress, web3.utils.toWei(PayETHAmount, 'ether')).send({ from: account }).on('transactionHash', (transactionHash) => this.setState({ paymentTxHash: transactionHash })).on("error", console.error).then(await contract.methods.savePettyCash(web3.utils.toWei(SavETHAmount.toString(), 'ether')).send({ from: account }).on('transactionHash', (transactionHash) => this.setState({ savingsTxHash: transactionHash })).on("error", console.error)) }
         catch (error) {
-            console.log("there is an error", error)
+            console.log(error)
         }
+        // try {  }
+        // catch (error) {
+        //     console.log("there is an error while making the savings", error)
+        // }
 
 
     };
@@ -38,14 +45,19 @@ class AddSavingsAccountAdd extends Component {
     render() {
         return (
             <div>
-                <form onSubmit={this.AddSavingsAccountAdd}>
+                <form onSubmit={this.PayETH}>
                     <label>
-                        Please provide the Account Address to which you want the marginal savings to be deposited: <input type="text" ref="SavingsAccountsAdd" />
+                        Payor ETH Address: <input type="text" ref="PayorETHAddress" />
                     </label>
-                    <input type="submit" value="Add Savings Account Address" />
+                    <label>
+                        Amount in ETH: <input type="number" step="0.01" ref="PayETHAmount" />
+                    </label>
+                    <input type="submit" value="Deposit ETH" />
                 </form>
-                {this.state.depositTxHash !== null ? (<p>
-                    The Deposit Tx Hash is {this.state.depositTxHash}
+
+                {/* <button >DepositETH</button> */}
+                {this.state.paymentTxHash !== null ? (<p>
+                    The Payment Tx Hash is {this.state.paymentTxHash}
                 </p>) : null}
             </div>
 
@@ -53,4 +65,4 @@ class AddSavingsAccountAdd extends Component {
     }
 }
 
-export default AddSavingsAccountAdd;
+export default PayETH;

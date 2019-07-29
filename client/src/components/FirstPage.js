@@ -5,7 +5,8 @@ import web3 from "../utils/getWeb3";
 import CA from "./ContractAddress"
 import DepositETH from "./DepositETH"
 import CheckBalance from "./CheckBalanceETH"
-import AddSavingsAccountAdd from "./AddSavingsAccountAdd"
+import { AddSavingsAccountAdd } from "./AddSavingsAccountAdd"
+import PayETH from "./PayETH"
 
 class FirstPage extends Component {
   constructor(props) {
@@ -127,6 +128,8 @@ class FirstPage extends Component {
             <DepositETH networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
             <CheckBalance networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
             <AddSavingsAccountAdd networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
+            <PayETH networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
+
 
           </div>
 

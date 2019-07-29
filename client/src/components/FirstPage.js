@@ -4,6 +4,7 @@ import AutoETHSavingsAccount from "../contracts/AutoETHSavingsAccount.json";
 import web3 from "../utils/getWeb3";
 import CA from "./ContractAddress"
 import DepositETH from "./DepositETH"
+import CheckBalance from "./CheckBalanceETH"
 
 class FirstPage extends Component {
   constructor(props) {
@@ -123,8 +124,7 @@ class FirstPage extends Component {
           <div>
             <CA contractAddress={this.state.contractAddress} />
             <DepositETH networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
-            {/* <DepositETH networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
-            <DepositETH networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} /> */}
+            <CheckBalance networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
           </div>
 
           : null}

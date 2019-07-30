@@ -56,7 +56,7 @@ class FirstPage extends Component {
       "events": {},
       "links": {},
       "address": this.state.contractAddress,
-      "transactionHash": this.state.txHash
+      "transactionHash": undefined
     }
     this.setState({deployedNetwork: deployedNetwork})
   };

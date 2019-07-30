@@ -76,11 +76,12 @@ class FirstPage extends Component {
       "address": this.refs.OldContractAddress.value,
       "transactionHash": undefined
     };
-    const instance = new web3.eth.Contract(
-      AutoETHSavingsAccount.abi,
-      deployedNetwork && this.refs.OldContractAddress.value,
-    );
-    console.log("we have got the instance", instance)
+    this.setState({ deployedNetwork: deployedNetwork, contractAddress: this.refs.OldContractAddress.value })
+    // const instance = new web3.eth.Contract(
+    //   AutoETHSavingsAccount.abi,
+    //   deployedNetwork && this.refs.OldContractAddress.value,
+    // );
+    this.setState({ hasContractAddress: true })
   }
 
 

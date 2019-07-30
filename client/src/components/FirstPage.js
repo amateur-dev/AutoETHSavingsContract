@@ -7,7 +7,10 @@ import ContractFunctions from "./ContractFunctions"
 class FirstPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { contractAddress: null, clicked: false, txHash: null, hasContractAddress: false, web3: null, deployedNetwork: null };
+    this.state = {
+      contractAddress: null, clicked: false, txHash: null, hasContractAddress: false, web3: null, deployedNetwork: null, deployNewtContract: false, wantToInteractWithOldContract: false,
+      OldContractButtonState: false, NewContractButtonState: false,
+    };
     autoBind(this);
   }
 
@@ -29,6 +32,7 @@ class FirstPage extends Component {
 
   deployContract = async (event) => {
     event.preventDefault();
+    this.setState({ OldContractButtonState: true })
     console.log('calling the deploy contract fx');
     web3 = await web3;
     console.log("deploying the contract");
@@ -42,8 +46,8 @@ class FirstPage extends Component {
     //   .on('receipt', (receipt) => { console.log(receipt.contractAddress) });
     await new web3.eth.Contract(AutoETHSavingsAccount.abi).deploy({
       data: AutoETHSavingsAccount.bytecode,
-    }).send({ from: accounts, gas: '1000000' })
-      .on('error', (error) => { console.log(error) })
+    }).send({ from: accounts })
+      .on('error', (error) => { alert(error) })
       .on('transactionHash', (transactionHash) => this.setState({ txHash: transactionHash }))
       .on('receipt', (receipt) => this.setState({ contractAddress: receipt.contractAddress }))
       .on('receipt', (receipt) => console.log("The ETH Address of the contract is", receipt.contractAddress))
@@ -54,8 +58,30 @@ class FirstPage extends Component {
       "address": this.state.contractAddress,
       "transactionHash": undefined
     }
-    this.setState({deployedNetwork: deployedNetwork})
+    this.setState({ deployedNetwork: deployedNetwork })
   };
+
+  AddOldContractAddress = (event) => {
+    event.preventDefault();
+    this.setState({ wantToInteractWithOldContract: true, NewContractButtonState: true })
+  }
+
+  GetOldContractInstance = async (event) => {
+    event.preventDefault();
+    web3 = await web3;
+    // const accounts = this.props.location.state.accounts;
+    const deployedNetwork = {
+      "events": {},
+      "links": {},
+      "address": this.refs.OldContractAddress.value,
+      "transactionHash": undefined
+    };
+    const instance = new web3.eth.Contract(
+      AutoETHSavingsAccount.abi,
+      deployedNetwork && this.refs.OldContractAddress.value,
+    );
+    console.log("we have got the instance", instance)
+  }
 
 
   // handleChange(event) {
@@ -116,14 +142,22 @@ class FirstPage extends Component {
     // }
     return (
       <div className="App">
-        {/* {this.renderContractAddress()}
-        <button onClick={this.showHi}>Submit</button>
-        {this.state.clicked ? (<p>Hi there!</p>) : null} */}
 
-        {/* <Counter /> */}
+        <h2>Would you like to depoly your new Auto ETH Savings Smart Contract or would you like to interact with an already deployed version of the Smart Contract?</h2><br />
 
-        <h2>Would you like to depoly your Petty Cash Savings Smart Contract</h2>
-        <button onClick={this.deployContract}>Submit</button>
+        <button onClick={this.deployContract} disabled={this.state.NewContractButtonState}>Deploy a New Contract</button>
+        <button onClick={this.AddOldContractAddress} disabled={this.state.OldContractButtonState}>Interact with an Already Deployed Contract</button><br />
+
+        {this.state.wantToInteractWithOldContract ? <form onSubmit={this.GetOldContractInstance}>
+          <br />
+          <label>
+            Please provide the Address of the already deployed contract: <input type="text" ref="OldContractAddress" />
+          </label>
+          <input type="submit" value="Submit" />
+        </form> : null}
+
+
+
         {this.state.hasContractAddress ?
           <div>
             <ContractFunctions contractAddress={this.state.contractAddress} deployedNetwork={this.state.deployedNetwork} networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} />

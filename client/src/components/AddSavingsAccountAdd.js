@@ -16,8 +16,7 @@ class AddSavingsAccountAdd extends Component {
         console.log('calling the AddSavingsAccountAdd fx');
         web3 = await web3;
         const account = this.props.accounts;
-        const networkId = this.props.networkId;
-        const deployedNetwork = AutoETHSavingsAccount.networks[networkId];
+        const deployedNetwork = this.props.deployedNetwork;
         const instance = new web3.eth.Contract(
             AutoETHSavingsAccount.abi,
             deployedNetwork && this.props.contractAddress,

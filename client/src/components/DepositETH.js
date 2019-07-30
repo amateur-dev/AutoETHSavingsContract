@@ -34,16 +34,17 @@ class DepositETH extends Component {
         console.log('calling the DepositETH fx');
         web3 = await web3;
         const account = this.props.accounts;
-        const networkId = this.props.networkId;
-        const deployedNetwork = AutoETHSavingsAccount.networks[networkId];
+        const deployedNetwork = this.props.deployedNetwork;
+        // const deployedNetwork = AutoETHSavingsAccount.networks[networkId];
         const instance = new web3.eth.Contract(
             AutoETHSavingsAccount.abi,
             deployedNetwork && this.props.contractAddress,
         );
+    
         const contract = instance;
         console.log("We got the instance and now calling the deposit ETH method")
         const depositETHAmount = this.refs.depositETHAmount.value;
-        await contract.methods.depositETH().send({ from: account, value: web3.utils.toWei(depositETHAmount, 'ether') }).on('transactionHash', (transactionHash) => {console.log(transactionHash); this.setState({ depositTxHash: transactionHash })})
+        await contract.methods.depositETH().send({ from: account, value: web3.utils.toWei(depositETHAmount, 'ether') }).on('transactionHash', (transactionHash) => {console.log("the tx hash of the deposit function is", transactionHash); this.setState({ depositTxHash: transactionHash })})
 
         // console.log(accounts[0])
         // await new web3.eth.Contract(AutoETHSavingsAccount.abi).deploy({

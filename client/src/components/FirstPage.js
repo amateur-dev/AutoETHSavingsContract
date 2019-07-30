@@ -11,7 +11,7 @@ import PayETH from "./PayETH"
 class FirstPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { contractAddress: null, clicked: false, txHash: null, hasContractAddress: false, web3: null };
+    this.state = { contractAddress: null, clicked: false, txHash: null, hasContractAddress: false, web3: null, deployedNetwork: null };
     autoBind(this);
   }
 
@@ -52,6 +52,13 @@ class FirstPage extends Component {
       .on('receipt', (receipt) => this.setState({ contractAddress: receipt.contractAddress }))
       .on('receipt', (receipt) => console.log("The ETH Address of the contract is", receipt.contractAddress))
     this.setState({ hasContractAddress: true })
+    const deployedNetwork = {
+      "events": {},
+      "links": {},
+      "address": this.state.contractAddress,
+      "transactionHash": this.state.txHash
+    }
+    this.setState({deployedNetwork: deployedNetwork})
   };
 
 
@@ -124,10 +131,10 @@ class FirstPage extends Component {
         {this.state.hasContractAddress ?
           <div>
             <CA contractAddress={this.state.contractAddress} />
-            <DepositETH networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
-            <CheckBalance networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
-            <AddSavingsAccountAdd networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
-            <PayETH networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
+            <DepositETH deployedNetwork={this.state.deployedNetwork} networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
+            <CheckBalance deployedNetwork={this.state.deployedNetwork} networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
+            <AddSavingsAccountAdd deployedNetwork={this.state.deployedNetwork} networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
+            <PayETH deployedNetwork={this.state.deployedNetwork} networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
 
 
           </div>

@@ -8210,8 +8210,8 @@
     "version": "0.5.8+commit.23d335f2.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.0.10",
-  "updatedAt": "2019-07-29T15:55:06.127Z",
+  "schemaVersion": "3.0.11",
+  "updatedAt": "2019-07-30T03:07:48.449Z",
   "devdoc": {
     "details": "Contract module that helps prevent reentrant calls to a function. * Inheriting from `ReentrancyGuard` will make the {nonReentrant} modifier available, which can be aplied to functions to make sure there are no nested (reentrant) calls to them. * Note that because there is a single `nonReentrant` guard, functions marked as `nonReentrant` may not call one another. This can be worked around by making those functions `private`, and then adding `external` `nonReentrant` entry points to them.",
     "methods": {}

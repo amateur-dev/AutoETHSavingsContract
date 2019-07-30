@@ -35,7 +35,6 @@ class FirstPage extends Component {
     event.preventDefault();
     console.log('calling the deploy contract fx');
     web3 = await web3;
-    // console.log(web3)
     console.log("deploying the contract");
     const accounts = this.props.location.state.accounts;
     // console.log(accounts[0])
@@ -51,7 +50,7 @@ class FirstPage extends Component {
       .on('error', (error) => { console.log(error) })
       .on('transactionHash', (transactionHash) => this.setState({ txHash: transactionHash }))
       .on('receipt', (receipt) => this.setState({ contractAddress: receipt.contractAddress }))
-      .on('receipt', (receipt) => console.log(receipt.contractAddress))
+      .on('receipt', (receipt) => console.log("The ETH Address of the contract is", receipt.contractAddress))
     this.setState({ hasContractAddress: true })
   };
 

@@ -16,9 +16,7 @@ class AddSavingsAccountAdd extends Component {
         console.log('calling the AddSavingsAccountAdd fx');
         web3 = await web3;
         const account = this.props.accounts;
-        console.log("accounts are ", account)
         const networkId = this.props.networkId;
-        console.log("network ID is", networkId)
         const deployedNetwork = AutoETHSavingsAccount.networks[networkId];
         const instance = new web3.eth.Contract(
             AutoETHSavingsAccount.abi,
@@ -27,7 +25,7 @@ class AddSavingsAccountAdd extends Component {
         const contract = instance;
         console.log("We got the instance and now calling the AddSavingsAccountAdd method")
         const SavingsAccountsAdd = this.refs.SavingsAccountsAdd.value;
-        try { await contract.methods.addSavingsAccounts(SavingsAccountsAdd).send({ from: account }).on('transactionHash', (transactionHash) => this.setState({ depositTxHash: transactionHash })).on("error", console.error) }
+        try { await contract.methods.addSavingsAccounts(SavingsAccountsAdd).send({ from: account }).on('transactionHash', (transactionHash) => this.setState({ depositTxHash: transactionHash }))}
         catch (error) {
             console.log("there is an error", error)
         }

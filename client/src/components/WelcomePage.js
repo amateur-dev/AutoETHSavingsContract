@@ -29,11 +29,17 @@ class WelcomePage extends Component {
             // Use web3 to get the user's accounts.
             const Allaccounts = await web3.eth.getAccounts();
             const accounts = Allaccounts[0]
-            console.log(accounts);
+            console.log("The account receievd from web3 is", accounts);
 
             // Get the contract instance.
             const networkId = await web3.eth.net.getId();
-            console.log(networkId);
+            const networkNames = {1: "MainNet", 3: "Ropsten", 4: "Rinkeby", 5777: "LocalWeb3"};
+            let currentNetwork = networkNames[networkId];
+            if (currentNetwork!==undefined){
+                console.log("The network ID received from web3 is", currentNetwork);    
+            } else {
+                console.log("You are using a private / undefined / unidentified Ethereum network");    
+            }
             this.setState({ web3, accounts, networkId });
         } catch (error) {
             // Catch any errors for any of the above operations.

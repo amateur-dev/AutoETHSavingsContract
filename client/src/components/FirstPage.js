@@ -2,11 +2,7 @@ import React, { Component } from "react";
 import autoBind from 'react-autobind';
 import AutoETHSavingsAccount from "../contracts/AutoETHSavingsAccount.json";
 import web3 from "../utils/getWeb3";
-import CA from "./ContractAddress"
-import DepositETH from "./DepositETH"
-import CheckBalance from "./CheckBalanceETH"
-import { AddSavingsAccountAdd } from "./AddSavingsAccountAdd"
-import PayETH from "./PayETH"
+import ContractFunctions from "./ContractFunctions"
 
 class FirstPage extends Component {
   constructor(props) {
@@ -130,12 +126,7 @@ class FirstPage extends Component {
         <button onClick={this.deployContract}>Submit</button>
         {this.state.hasContractAddress ?
           <div>
-            <CA contractAddress={this.state.contractAddress} />
-            <DepositETH deployedNetwork={this.state.deployedNetwork} networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
-            <CheckBalance deployedNetwork={this.state.deployedNetwork} networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
-            <AddSavingsAccountAdd deployedNetwork={this.state.deployedNetwork} networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
-            <PayETH deployedNetwork={this.state.deployedNetwork} networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} contractAddress={this.state.contractAddress} />
-
+            <ContractFunctions contractAddress={this.state.contractAddress} deployedNetwork={this.state.deployedNetwork} networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} />
 
           </div>
 

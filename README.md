@@ -1,4 +1,4 @@
-# AutoETHSavingsAccount
+# AutoETHSavingsAccount {Consensys BootCamp Final Project}
 
 ##  About the DAPP
 

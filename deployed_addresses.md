@@ -1,0 +1,1 @@
+My Version of the Auto Save Smart Contract has been deployed on the Rinkeby Test Net. The Address is 0x1f540d8a2f64656f207f48204Dd899648486b79F.

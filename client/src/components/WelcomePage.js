@@ -65,10 +65,10 @@ class WelcomePage extends Component {
                 <h2 id="details-on-autosavingsaccount">Details on AutoSavingsAccount</h2>
                 <p>With AutoSave, every payment that you make, leads to making 1% savings of it.  The Auto Save amount is transferred to another ETH account that you specify at the beginning - the other account is referred to as your <em>SavingsETHAccount</em>.  The idea is that you are autosaving some of your money (really small amounts), at the time of the expense and then can visit your <em>SavingsETHAccount</em> at the end of a period (eg a year, or 5 years) and then utilise those savings.</p>
 
-                <br /> Here is a link to the contract [DIPESH TO INSERT THE LINK TO THE CONTRACT].<br /><br />   
+                <br /> Here is a link to the contract <a href="https://gitlab.com/amateur-dev/autoethsavingsaccountsc/blob/master/AutoETHSavingsSC">[GO TO THE CONTRACT].</a><br /><br />   
 
-                <h2 id="how-it-works">How it works</h2>
-                <h4 id="first-time-use">First Time Use</h4>
+                <h2 id="how-it-works">How it works</h2><br />
+                <h4 id="first-time-use">First Time Use</h4><br />
                 <h5 id="depolyment-of-contract">Depolyment of Contract</h5>
 
 
@@ -77,8 +77,8 @@ class WelcomePage extends Component {
                         accounts: this.state.accounts,
                         networkId: this.state.networkId
                     },
-                }}>this page</Link></strong></mark>, you will see these two buttons: <br /><br />Button 1: <mark><code>deploy contract</code></mark> and <br /><br />
-                Button 2: <mark><code>Use Existing AutoSave contract</code></mark>.  
+                }}>this page</Link></strong></mark>, you will see these two buttons: <br /><br />Button 1: <mark><code>Deploy A New Contract</code></mark> and <br /><br />
+                Button 2: <mark><code>Interact with an Alredy Deployed Contract</code></mark>.  
                 
                 <br /><br /> As it is obvious, using Button 1 will deploy the Auto Savings Smart Contract for you.
 

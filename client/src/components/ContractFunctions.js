@@ -17,11 +17,36 @@ class ContractFunctions extends Component {
     render() {
         return (
             <div>
-            <CA contractAddress={this.props.contractAddress} />
+            {
+            this.props.oldContractAddress !== undefined ? (<div>
+            <br/><h2>Great! Following are the functions of the Smart Contract that you can use: </h2>
+            <br />
+            <CheckBalance deployedNetwork={this.props.deployedNetwork} networkId={this.props.networkId} accounts={this.props.accounts} contractAddress={this.props.oldContractAddress} />
+            <br />
+            <DepositETH deployedNetwork={this.props.deployedNetwork} networkId={this.props.networkId} accounts={this.props.accounts} contractAddress={this.props.oldContractAddress} />
+            <br />
+            <AddSavingsAccountAdd deployedNetwork={this.props.deployedNetwork} networkId={this.props.networkId} accounts={this.props.accounts} contractAddress={this.props.oldContractAddress} />
+            <br />
+            <PayETH deployedNetwork={this.props.deployedNetwork} networkId={this.props.networkId} accounts={this.props.accounts} contractAddress={this.props.oldContractAddress} />
+            <br />
+            </div>) : null
+            }    
+            {
+            this.props.contractAddress !== undefined ?
+            (<div>
+            <CA contractAddress={this.props.contractAddress} /><br />
+            <h2>Following are the functions of the Smart Contract that you can use: </h2>
+            <br />
             <DepositETH deployedNetwork={this.props.deployedNetwork} networkId={this.props.networkId} accounts={this.props.accounts} contractAddress={this.props.contractAddress} />
+            <br />
             <CheckBalance deployedNetwork={this.props.deployedNetwork} networkId={this.props.networkId} accounts={this.props.accounts} contractAddress={this.props.contractAddress} />
+            <br />
             <AddSavingsAccountAdd deployedNetwork={this.props.deployedNetwork} networkId={this.props.networkId} accounts={this.props.accounts} contractAddress={this.props.contractAddress} />
+            <br />
             <PayETH deployedNetwork={this.props.deployedNetwork} networkId={this.props.networkId} accounts={this.props.accounts} contractAddress={this.props.contractAddress} />
+            </div> )
+            : null
+            }    
 
 
              </div>

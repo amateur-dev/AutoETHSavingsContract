@@ -106,48 +106,35 @@ contract AutoETHSavingsAccount is Ownable, ReentrancyGuard{
     using SafeMath for uint;
     
     // state variables
-    // address[] private savingsAccountsArray;
     address payable private savingsAccount;
     uint public balance;
-    
-    
-    // mapping (string => address payable) accounts; // maps the name of the account to their addresses
 
     constructor () public {
-        // to reconfirm that there is nothing that needs to be set while deploying the contract
     }
     
+    // this function lets you add and replace the old SavingsAccount in which the marginal savings will be deposited
     function addSavingsAccounts (address payable _address) onlyOwner public {
         savingsAccount = _address;
     }
     
+    // this function lets you deposit ETH into this wallet
     function depositETH() payable public returns (uint) {
         balance += msg.value;
     }
-    
+    // fallback function let you / anyone send ETH to this wallet without the need to call any function
     function() external payable {
         balance += msg.value;
     }
-    
-    function canPayAndSave (uint _grossAmount) public onlyOwner view returns (bool) {
-        if (balance > _grossAmount + 20000000000000000) 
-            return true;
-        else 
-            return false;
-    }
-    
-    
-    function payETH(address payable _to, uint _amount) onlyOwner nonReentrant external returns (uint) {
-        require(balance > _amount + 10000000000000000, "the balance held by the Contract is less than the amount required to be paid");
-        balance -= _amount;
+    // Through this function you will be making a normal payment to any external address or a wallet address as in the normal situation    
+    function payETH(address payable _to, uint _amount, uint _pettyAmount) onlyOwner nonReentrant external returns (uint) {
+        require(balance > _amount + _pettyAmount + 20000000000000000, "the balance held by the Contract is less than the amount required to be paid");
+        balance = balance - _amount - _pettyAmount;
+        savePettyCash(_pettyAmount);
         _to.transfer(_amount);
         }
-        
-    
-    function savePettyCash(uint _pettyAmount) public {
-        require (balance > _pettyAmount + 10000000000000000, "the balance held by the Contract not sufficient for the savings account");
+    // Depositing the savings amount into the Savings Account   
+    function savePettyCash(uint _pettyAmount) internal {
         savingsAccount.transfer(_pettyAmount);
     }
-    
-    
+
 }

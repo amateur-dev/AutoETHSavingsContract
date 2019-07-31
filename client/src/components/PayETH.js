@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import AutoETHSavingsAccount from "../contracts/AutoETHSavingsAccount.json";
 import web3 from "../utils/getWeb3";
 import autoBind from 'react-autobind';
+import WorkingWithTheBlockchain from "./WorkingWithTheBlockchain";
 
 class PayETH extends Component {
     constructor(props) {
         super(props);
-        this.state = { paymentTxHash: null, savingsTxHash: null };
+        this.state = { paymentTxHash: null, savingsTxHash: null, showLoader: false };
         autoBind(this);
     }
 
@@ -27,11 +28,13 @@ class PayETH extends Component {
         const PayorETHAddress = this.refs.PayorETHAddress.value;
         const SavETHAmount = PayETHAmount * 0.01;
         console.log("The ETH that is going to be deposited in the savings account is ", SavETHAmount, typeof SavETHAmount);
-        try { await contract.methods.payETH(PayorETHAddress, web3.utils.toWei(PayETHAmount, 'ether')).send({ from: account }).on('transactionHash', (transactionHash) => this.setState({ paymentTxHash: transactionHash })).on("error", console.error).then(await contract.methods.savePettyCash(web3.utils.toWei(SavETHAmount.toString(), 'ether')).send({ from: account }).on('transactionHash', (transactionHash) => this.setState({ savingsTxHash: transactionHash })).on("error", console.error)) }
+        this.setState({ showLoader: true })
+        try {
+            await contract.methods.payETH(PayorETHAddress, web3.utils.toWei(PayETHAmount, 'ether'), web3.utils.toWei(SavETHAmount.toString(), 'ether')).send({ from: account }).on('receipt', (receipt) => { this.setState({ paymentTxHash: receipt["transactionHash"], showLoader: false }) }).on('error', (error) => { alert(error); this.setState({ showLoader: false }) })
+        }
         catch (error) {
             console.log(error)
         }
-
 
     };
 
@@ -39,18 +42,23 @@ class PayETH extends Component {
         return (
             <div>
                 <form onSubmit={this.PayETH}>
-                    <label>
-                        Payor ETH Address: <input type="text" ref="PayorETHAddress" />
-                    </label>
-                    <label>
-                        Amount in ETH: <input type="number" step="0.01" ref="PayETHAmount" />
-                    </label>
-                    <input type="submit" value="Pay ETH" />
-                </form>
 
-                {/* <button >DepositETH</button> */}
+                    Payor ETH Address:
+                    <div className="col-7">
+                        <input type="text" ref="PayorETHAddress" />
+                    </div>
+                    <br />
+                    Amount in ETH:
+                    <div className="col-4">
+                        <input type="number" step="0.01" ref="PayETHAmount" />
+                    </div>
+                    <input className="ml-2 btn btn-primary" type="submit" value="Pay ETH" />
+                </form>
+                <br />
+
+                {this.state.showLoader ? <WorkingWithTheBlockchain /> : null}
                 {this.state.paymentTxHash !== null ? (<p>
-                    The Payment Tx Hash is {this.state.paymentTxHash}
+                    Yiphee! Your Payment transaction has successfully been mined on the Blockchain.  The transaction hash is {this.state.paymentTxHash}
                 </p>) : null}
             </div>
 

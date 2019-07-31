@@ -2,12 +2,16 @@ import React, { Component } from "react";
 
 
 class CA extends Component {
-
   render() {
     return (
       <div>
-        The Contract Address is {this.props.contractAddress}
+      {this.props.contractAddress !== null ?(<div> <br />
+      <br />
+      <h3>Thank you! Your Contract has been deployed.  The Address of the Contract is {this.props.contractAddress} </h3></div>)
+     : null
+      }
       </div>
+      
     );
   };
 }

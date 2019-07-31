@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import autoBind from 'react-autobind';
 import AutoETHSavingsAccount from "../contracts/AutoETHSavingsAccount.json";
 import web3 from "../utils/getWeb3";
-import ContractFunctions from "./ContractFunctions"
+import ContractFunctions from "./ContractFunctions";
+import WorkingWithTheBlockchain from "./WorkingWithTheBlockchain";
 import { Link } from 'react-router-dom';
 
 class FirstPage extends Component {
@@ -10,7 +11,7 @@ class FirstPage extends Component {
     super(props);
     this.state = {
       contractAddress: null, oldContractAddress: null, clicked: false, txHash: null, hasContractAddress: false, hasOldContractAddress: false, web3: null, deployedNetwork: null, deployNewtContract: false, wantToInteractWithOldContract: false,
-      OldContractButtonState: false, NewContractButtonState: false,
+      OldContractButtonState: false, NewContractButtonState: false, showLoader: false
     };
     autoBind(this);
   }
@@ -45,12 +46,13 @@ class FirstPage extends Component {
     //   .on('error', (error) => { console.log(error) })
     //   .on('transactionHash', (transactionHash) => { console.log("The Tx Hash is: " + transactionHash) })
     //   .on('receipt', (receipt) => { console.log(receipt.contractAddress) });
+    this.setState({ showLoader: true })
     await new web3.eth.Contract(AutoETHSavingsAccount.abi).deploy({
       data: AutoETHSavingsAccount.bytecode,
     }).send({ from: accounts })
-      .on('error', (error) => { alert(error) })
+      .on('error', (error) => { alert(error); this.setState({ showLoader: false }) })
       .on('transactionHash', (transactionHash) => this.setState({ txHash: transactionHash }))
-      .on('receipt', (receipt) => this.setState({ contractAddress: receipt.contractAddress, oldContractAddress: null }))
+      .on('receipt', (receipt) => this.setState({ showLoader: false, contractAddress: receipt.contractAddress, oldContractAddress: null }))
       .on('receipt', (receipt) => console.log("The ETH Address of the contract is", receipt.contractAddress))
     this.setState({ hasContractAddress: true })
     const deployedNetwork = {
@@ -69,24 +71,26 @@ class FirstPage extends Component {
 
   GetOldContractInstance = async (event) => {
     event.preventDefault();
+    web3 = await web3;
+
     if (web3.utils.isAddress(this.refs.OldContractAddress.value)) {
-      web3 = await web3;
-    // const accounts = this.props.location.state.accounts;
-    const deployedNetwork = {
-      "events": {},
-      "links": {},
-      "address": this.refs.OldContractAddress.value,
-      "transactionHash": undefined
-    };
-    this.setState({ deployedNetwork: deployedNetwork, oldContractAddress: this.refs.OldContractAddress.value, contractAddress: null })
-    // const instance = new web3.eth.Contract(
-    //   AutoETHSavingsAccount.abi,
-    //   deployedNetwork && this.refs.OldContractAddress.value,
-    // );
-    this.setState({ hasOldContractAddress: true })
+
+
+      const deployedNetwork = {
+        "events": {},
+        "links": {},
+        "address": this.refs.OldContractAddress.value,
+        "transactionHash": undefined
+      };
+      this.setState({ deployedNetwork: deployedNetwork, oldContractAddress: this.refs.OldContractAddress.value, contractAddress: null })
+      // const instance = new web3.eth.Contract(
+      //   AutoETHSavingsAccount.abi,
+      //   deployedNetwork && this.refs.OldContractAddress.value,
+      // );
+      this.setState({ hasOldContractAddress: true })
     }
     else (alert("You have not entered a valid contract address"))
-    
+
   }
 
 
@@ -156,16 +160,20 @@ class FirstPage extends Component {
         <button className="btn btn-info m-2" onClick={this.AddOldContractAddress} disabled={this.state.OldContractButtonState}>Interact with an Already Deployed Contract</button><br /><br />
 
         <Link to={{ pathname: "/" }}><button className="btn btn-info ml-2"><i className="small material-icons px-1">home</i>Back to the ReadMe Page</button><br /></Link>
+        <br />
+        <br />
+        {this.state.showLoader ? <WorkingWithTheBlockchain /> : null}
+
 
 
         {this.state.wantToInteractWithOldContract ? <form onSubmit={this.GetOldContractInstance}>
           <br />
-          
-            Please provide the Address of the already deployed contract: 
+
+          Please provide the Address of the already deployed contract:
             <br />
-            <input type="text" ref="OldContractAddress" />
-            <input className="ml-2 btn btn-primary" type="submit" value="Submit" />
-            <br />
+          <input type="text" ref="OldContractAddress" />
+          <input className="ml-2 btn btn-primary" type="submit" value="Submit" />
+          <br />
         </form> : null}
 
 
@@ -178,13 +186,13 @@ class FirstPage extends Component {
 
           : null}
 
-          {this.state.hasOldContractAddress ? 
+        {this.state.hasOldContractAddress ?
           (<div>
             <ContractFunctions oldContractAddress={this.state.oldContractAddress} deployedNetwork={this.state.deployedNetwork} networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} />
 
           </div>)
 
-          : null}  
+          : null}
 
         {/* <form onSubmit={this.deployContract}>
           <input type="submit" value="Submit"/>

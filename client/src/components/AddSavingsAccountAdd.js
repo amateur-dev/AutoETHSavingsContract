@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import AutoETHSavingsAccount from "../contracts/AutoETHSavingsAccount.json";
 import web3 from "../utils/getWeb3";
 import autoBind from 'react-autobind';
+import WorkingWithTheBlockchain from "./WorkingWithTheBlockchain";
 
 class AddSavingsAccountAdd extends Component {
     constructor(props) {
         super(props);
-        this.state = { depositTxHash: null };
+        this.state = { addSavingsAccTxHash: null, showLoader: false };
         autoBind(this);
     }
 
@@ -24,7 +25,10 @@ class AddSavingsAccountAdd extends Component {
         const contract = instance;
         console.log("We got the instance and now calling the AddSavingsAccountAdd method")
         const SavingsAccountsAdd = this.refs.SavingsAccountsAdd.value;
-        try { await contract.methods.addSavingsAccounts(SavingsAccountsAdd).send({ from: account }).on('transactionHash', (transactionHash) => this.setState({ depositTxHash: transactionHash }))}
+        this.setState({ showLoader: true })
+        try {
+            await contract.methods.addSavingsAccounts(SavingsAccountsAdd).send({ from: account }).on('receipt', (receipt) => { this.setState({ addSavingsAccTxHash: receipt["transactionHash"], showLoader: false }) }).on('error', (error) => { alert(error); this.setState({ showLoader: false }) })
+        }
         catch (error) {
             console.log("there is an error", error)
         }
@@ -36,16 +40,18 @@ class AddSavingsAccountAdd extends Component {
         return (
             <div>
                 <form onSubmit={this.AddSavingsAccountAdd}>
-                    
-                    Please provide the Account Address to which you want the marginal savings to be deposited: 
+
+                    Please provide the Account Address to which you want the marginal savings to be deposited:
                     <div className="col-7">
-                    <input type="text" ref="SavingsAccountsAdd" />
+                        <input type="text" ref="SavingsAccountsAdd" />
                     </div>
-                    
+
                     <input className="ml-2 btn btn-primary" type="submit" value="Add Savings Account Address" />
                 </form>
-                {this.state.depositTxHash !== null ? (<p>
-                    The Deposit Tx Hash is {this.state.depositTxHash}
+                <br />
+                {this.state.showLoader ? <WorkingWithTheBlockchain /> : null}
+                {this.state.addSavingsAccTxHash !== null ? (<p>
+                    Yiphee! Your 'Add Savings Account' transaction has successfully been mined on the Blockchain.  The transaction hash is {this.state.addSavingsAccTxHash}
                 </p>) : null}
             </div>
 

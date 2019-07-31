@@ -39,10 +39,12 @@ class CheckBalance extends Component {
         // }
         return (
             <div>
-                <button onClick={this.CheckBalance}>Check Wallet Balance</button>
-                {this.state.WalletBalance !== null ? (<p>
+                <button className="ml-2 btn btn-primary" onClick={this.CheckBalance}>Check Wallet Balance</button>
+                <br />
+                <br />
+                {this.state.WalletBalance !== null ? (<h4>
                     The Wallet Balance is {this.state.WalletBalance} Ether
-                </p>) : null}
+                </h4>) : null}
             </div>
 
         );

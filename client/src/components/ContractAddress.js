@@ -2,16 +2,13 @@ import React, { Component } from "react";
 
 
 class CA extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { depositTxHash: null };
-  }
-
   render() {
     return (
       <div>
-      {this.props.contractAddress !== null ?
-      <p>The Address of the Contract is {this.props.contractAddress} </p>: null
+      {this.props.contractAddress !== null ?(<div> <br />
+      <br />
+      <h3>Thank you! Your Contract has been deployed.  The Address of the Contract is {this.props.contractAddress} </h3></div>)
+     : null
       }
       </div>
       

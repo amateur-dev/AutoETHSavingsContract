@@ -39,13 +39,17 @@ class PayETH extends Component {
         return (
             <div>
                 <form onSubmit={this.PayETH}>
-                    <label>
-                        Payor ETH Address: <input type="text" ref="PayorETHAddress" />
-                    </label>
-                    <label>
-                        Amount in ETH: <input type="number" step="0.01" ref="PayETHAmount" />
-                    </label>
-                    <input type="submit" value="Pay ETH" />
+    
+                    Payor ETH Address: 
+                    <div className="col-7">
+                        <input type="text" ref="PayorETHAddress" />
+                    </div>
+                    <br />
+                    Amount in ETH: 
+                    <div className="col-4">
+                    <input type="number" step="0.01" ref="PayETHAmount" />
+                    </div>
+                    <input className="ml-2 btn btn-primary" type="submit" value="Pay ETH" />
                 </form>
 
                 {/* <button >DepositETH</button> */}

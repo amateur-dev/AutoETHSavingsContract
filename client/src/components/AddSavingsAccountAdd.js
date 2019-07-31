@@ -36,10 +36,13 @@ class AddSavingsAccountAdd extends Component {
         return (
             <div>
                 <form onSubmit={this.AddSavingsAccountAdd}>
-                    <label>
-                        Please provide the Account Address to which you want the marginal savings to be deposited: <input type="text" ref="SavingsAccountsAdd" />
-                    </label>
-                    <input type="submit" value="Add Savings Account Address" />
+                    
+                    Please provide the Account Address to which you want the marginal savings to be deposited: 
+                    <div className="col-7">
+                    <input type="text" ref="SavingsAccountsAdd" />
+                    </div>
+                    
+                    <input className="ml-2 btn btn-primary" type="submit" value="Add Savings Account Address" />
                 </form>
                 {this.state.depositTxHash !== null ? (<p>
                     The Deposit Tx Hash is {this.state.depositTxHash}

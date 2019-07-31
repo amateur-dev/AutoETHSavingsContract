@@ -1,0 +1,30 @@
+{
+  "name": "auto-eth-savings-smart-contract",
+  "version": "1.0.0",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "ganache-cli": "^6.5.1",
+    "truffle-hdwallet-provider": "^1.0.15",
+    "web3": "^1.2.0"
+  },
+  "devDependencies": {
+    "mocha": "^6.2.0"
+  },
+  "scripts": {
+    "start": "cd client && npm install && npm run start",
+    "test": "mocha test/AutoETHSavingsAccount"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amateur-dev/AutoETHSavingsContract.git"
+  },
+  "author": "Dipesh Sukhani",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amateur-dev/AutoETHSavingsContract/issues"
+  },
+  "homepage": "https://github.com/amateur-dev/AutoETHSavingsContract#readme"
+}

@@ -17,21 +17,18 @@ Here is a link to the [contract](https://github.com/amateur-dev/truffle-react-si
 # Details on how to run
 
 1. Clone the repo
-2. Deploying on TestNet (Mainnet can also be used)
-  1. cd client
-    2. run `npm install` in your terminal
-    3. run `npm start`
-  4. visit http://localhost:3000/
-  5. You will see all the detailed instructions
-3. Deploying on Ganache GUI network
-  1. run `npm install` in your terminal
-  1. Assuming you have truffle installed: run `truffle compile`
-  2. Next, run `truffle migrate`.  This will deploy the contract to the local blockchain running through Ganache GUI on port `7545` 
-  3. cd client
-  4. run `npm install`
-  5. run `npm start`
-  6. visit http://localhost:3000/
-  7. You will see all the detailed instructions
+2. Run `npm install` in your terminal
+3. Deploying on TestNet (Mainnet can also be used)
+    * Run the following command from the root directory:
+        1. run `npm run start`
+        2. visit http://localhost:3000/
+        3. You will see all the detailed instructions
+4. Deploying on Ganache GUI network
+    1. Assuming you have truffle installed: run `truffle compile`
+    2. Run `truffle migrate`.  This will deploy the contract to the local blockchain running through Ganache GUI on port `7545` 
+    3. run `npm run start`
+    4. visit http://localhost:3000/
+    5. You will see all the detailed instructions
 
 ## My Version of the Auto Save Smart Contract has been deployed on the Rinkeby Test Net. The Address is 0x1f540d8a2f64656f207f48204Dd899648486b79F
 

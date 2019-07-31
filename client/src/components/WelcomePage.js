@@ -78,7 +78,7 @@ class WelcomePage extends Component {
                         networkId: this.state.networkId
                     },
                 }}>this page</Link></strong></mark>, you will see these two buttons: <br /><br />Button 1: <mark><code>Deploy A New Contract</code></mark> and <br /><br />
-                Button 2: <mark><code>Interact with an Alredy Deployed Contract</code></mark>.  
+                Button 2: <mark><code>Interact with an Already Deployed Contract</code></mark>.  
                 
                 <br /><br /> As it is obvious, using Button 1 will deploy the Auto Savings Smart Contract for you.
 
@@ -90,7 +90,7 @@ class WelcomePage extends Component {
                 <h5 id="adding-your-savings-account-address">Adding your Savings Account Address</h5>
                 <p>You will see another function call button "Add Savings Account Address".  Through this, you can provide the external wallet address that you want any of the savings to be deposited.  While it is recommended that you should only provide the wallet address to which you have a control (ie have access to the private keys), you are free to provide the wallet address of any of your loved ones (eg, spouse, children) etc.  </p>
                 <blockquote>
-                    <p>Please note, this DAPP / Smart Contract does not let you take any control or manage the Savings Account that you provide. This Smart Contract only lets you round up your expense and auto deposit the rounding up difference in your Savings Account.  You will have to control the Savings Account on your own.</p>
+                    <p>Please note, this DAPP / Smart Contract does not let you take any control or manage the Savings Account that you provide. This Smart Contract only lets you compute a marginal savings amount and auto deposit it in your Savings Account.  You will have to control the Savings Account on your own.</p>
                 </blockquote>
                 <h5 id="making-the-payment-to-an-external-party">Making the Payment to an external Party</h5>
                 <p>After adding your Savings Account -&gt; you can use the functions of making payment to any external payor.  Here you will provide the address to which you will make the normal payment and the amout of ETH.  Once you provide that and click the button <code>Pay ETH</code> the DAPP will compute 1% of the payment amount, and </p>

@@ -8,6 +8,11 @@ The objective of the DAPP is that whenever you make a payment to anyone through 
 
 The DAPP is inspired by similar financial service offered by various banks today.   [Acrons](https://www.acorns.com/)  has been offering this service in the US.  Here is a link to their explainer [video](https://assets.acorns.com/videos/Spend+Web/spend_promo_2019_16-9.mp4), for your reference and ease of understanding.
 
+## About the Author
+
+So before you dive into reviewing my work, one key thing that I would like to highlight to you is that I am NOT a developer either by profession or academically trained.  Hence, please judge me as if you are judging a noob on this project.  I have hobby coding experience in Python and Flask.  I am picking up on Django.  I literally learnt all React, ES6 (damn those async, await functions) and Solidity for this project.
+
+
 ## Details on AutoSavingsAccount
 
 With AutoSave, every payment that you make, leads to making 1% savings of it. The Auto Save amount is transferred to another ETH account that you specify at the beginning - the other account is referred to as your _SavingsETHAccount_. The idea is that you are autosaving some of your money (really small amounts), at the time of the expense and then can visit your _SavingsETHAccount_ at the end of a period (eg a year, or 5 years) and then utilise those savings.

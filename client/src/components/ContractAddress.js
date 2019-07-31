@@ -2,12 +2,19 @@ import React, { Component } from "react";
 
 
 class CA extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { depositTxHash: null };
+  }
 
   render() {
     return (
       <div>
-        The Contract Address is {this.props.contractAddress}
+      {this.props.contractAddress !== null ?
+      <p>The Address of the Contract is {this.props.contractAddress} </p>: null
+      }
       </div>
+      
     );
   };
 }

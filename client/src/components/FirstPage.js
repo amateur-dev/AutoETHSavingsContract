@@ -3,12 +3,13 @@ import autoBind from 'react-autobind';
 import AutoETHSavingsAccount from "../contracts/AutoETHSavingsAccount.json";
 import web3 from "../utils/getWeb3";
 import ContractFunctions from "./ContractFunctions"
+import { Link } from 'react-router-dom';
 
 class FirstPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      contractAddress: null, clicked: false, txHash: null, hasContractAddress: false, web3: null, deployedNetwork: null, deployNewtContract: false, wantToInteractWithOldContract: false,
+      contractAddress: null, oldContractAddress: null, clicked: false, txHash: null, hasContractAddress: false, web3: null, deployedNetwork: null, deployNewtContract: false, wantToInteractWithOldContract: false,
       OldContractButtonState: false, NewContractButtonState: false,
     };
     autoBind(this);
@@ -76,7 +77,7 @@ class FirstPage extends Component {
       "address": this.refs.OldContractAddress.value,
       "transactionHash": undefined
     };
-    this.setState({ deployedNetwork: deployedNetwork, contractAddress: this.refs.OldContractAddress.value })
+    this.setState({ deployedNetwork: deployedNetwork, oldContractAddress: this.refs.OldContractAddress.value })
     // const instance = new web3.eth.Contract(
     //   AutoETHSavingsAccount.abi,
     //   deployedNetwork && this.refs.OldContractAddress.value,
@@ -146,8 +147,10 @@ class FirstPage extends Component {
 
         <h2>Would you like to depoly your new Auto ETH Savings Smart Contract or would you like to interact with an already deployed version of the Smart Contract?</h2><br />
 
-        <button onClick={this.deployContract} disabled={this.state.NewContractButtonState}>Deploy a New Contract</button>
-        <button onClick={this.AddOldContractAddress} disabled={this.state.OldContractButtonState}>Interact with an Already Deployed Contract</button><br />
+        <button className="btn btn-primary m-2" onClick={this.deployContract} disabled={this.state.NewContractButtonState}>Deploy a New Contract</button>
+        <button className="btn btn-info m-2" onClick={this.AddOldContractAddress} disabled={this.state.OldContractButtonState}>Interact with an Already Deployed Contract</button><br /><br />
+        <Link to={{ pathname: "/" }}><button className="btn btn-info ml-2"><i className="small material-icons px-1">home</i>Back to the ReadMe Page</button><br /></Link>
+
 
         {this.state.wantToInteractWithOldContract ? <form onSubmit={this.GetOldContractInstance}>
           <br />
@@ -161,7 +164,7 @@ class FirstPage extends Component {
 
         {this.state.hasContractAddress ?
           <div>
-            <ContractFunctions contractAddress={this.state.contractAddress} deployedNetwork={this.state.deployedNetwork} networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} />
+            <ContractFunctions contractAddress={this.state.contractAddress} deployedNetwork={this.state.deployedNetwork} networkId={this.props.location.state.networkId} accounts={this.props.location.state.accounts} oldContractAddress={this.state.oldContractAddress} />
 
           </div>
 

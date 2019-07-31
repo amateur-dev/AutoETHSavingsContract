@@ -17,7 +17,8 @@ class ContractFunctions extends Component {
     render() {
         return (
             <div>
-            <CA contractAddress={this.props.contractAddress} />
+            <CA contractAddress={this.props.contractAddress} /><br />
+            <h2>Following are the functions of the Smart Contract that you can use: </h2>
             <DepositETH deployedNetwork={this.props.deployedNetwork} networkId={this.props.networkId} accounts={this.props.accounts} contractAddress={this.props.contractAddress} />
             <CheckBalance deployedNetwork={this.props.deployedNetwork} networkId={this.props.networkId} accounts={this.props.accounts} contractAddress={this.props.contractAddress} />
             <AddSavingsAccountAdd deployedNetwork={this.props.deployedNetwork} networkId={this.props.networkId} accounts={this.props.accounts} contractAddress={this.props.contractAddress} />

@@ -131,10 +131,13 @@ class DepositETH extends Component {
         return (
             <div>
                 <form onSubmit={this.DepositETH}>
+                <br />
+                    Please input the ETH (upto 2 decimal points is OK) that you would like to deposit in the Wallet
+                    <br />
                     <label>
-                        Amount in ETH: <input type="number" step="0.01" ref="depositETHAmount" />
+                        <input type="number" step="0.01" ref="depositETHAmount" />
                     </label>
-                    <input type="submit" value="Deposit ETH" />
+                    <input className="ml-2 btn btn-primary" type="submit" value="Deposit ETH" />
                 </form>
 
                 {/* <button >DepositETH</button> */}

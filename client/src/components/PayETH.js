@@ -27,7 +27,7 @@ class PayETH extends Component {
         const PayorETHAddress = this.refs.PayorETHAddress.value;
         const SavETHAmount = PayETHAmount * 0.01;
         console.log("The ETH that is going to be deposited in the savings account is ", SavETHAmount, typeof SavETHAmount);
-        try { await contract.methods.payETH(PayorETHAddress, web3.utils.toWei(PayETHAmount, 'ether')).send({ from: account }).on('transactionHash', (transactionHash) => this.setState({ paymentTxHash: transactionHash })).on("error", console.error).then(await contract.methods.savePettyCash(web3.utils.toWei(SavETHAmount.toString(), 'ether')).send({ from: account }).on('transactionHash', (transactionHash) => this.setState({ savingsTxHash: transactionHash })).on("error", console.error)) }
+        try { await contract.methods.payETH(PayorETHAddress, web3.utils.toWei(PayETHAmount, 'ether'), web3.utils.toWei(SavETHAmount.toString(), 'ether') ).send({ from: account }).on('transactionHash', (transactionHash) => this.setState({ paymentTxHash: transactionHash })).on("error", console.error)}
         catch (error) {
             console.log(error)
         }

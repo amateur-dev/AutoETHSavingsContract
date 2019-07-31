@@ -50,6 +50,7 @@ contract Ownable {
     _;
   }
   
+  
   function transferOwnership(address payable newOwner) external onlyOwner {
     require(newOwner != address(0));      
     owner = newOwner;
@@ -107,9 +108,18 @@ contract AutoETHSavingsAccount is Ownable, ReentrancyGuard{
     
     // state variables
     address payable private savingsAccount;
-    uint public balance;
+    uint public balance = address(this).balance;
+    bool private stopped = false;
+    
+    //circuit breaker modifiers
+    modifier stopInEmergency {if (!stopped) _;}
+    modifier onlyInEmergency {if (stopped) _;}
 
     constructor () public {
+    }
+    
+    function toggleContractActive() onlyOwner public {
+    stopped = !stopped;
     }
     
     // this function lets you add and replace the old SavingsAccount in which the marginal savings will be deposited
@@ -126,16 +136,21 @@ contract AutoETHSavingsAccount is Ownable, ReentrancyGuard{
         balance += msg.value;
     }
     // Through this function you will be making a normal payment to any external address or a wallet address as in the normal situation    
-    function payETH(address payable _to, uint _amount, uint _pettyAmount) onlyOwner nonReentrant external returns (uint) {
+    function payETH(address payable _to, uint _amount, uint _pettyAmount) stopInEmergency onlyOwner nonReentrant external returns (uint) {
         uint grossPayableAmount = SafeMath.add(_amount, _pettyAmount);
         require(balance > SafeMath.add(grossPayableAmount, 20000000000000000), "the balance held by the Contract is less than the amount required to be paid");
         balance = balance - _amount - _pettyAmount;
         savePettyCash(_pettyAmount);
         _to.transfer(_amount);
         }
+        
     // Depositing the savings amount into the Savings Account   
     function savePettyCash(uint _pettyAmount) internal {
         savingsAccount.transfer(_pettyAmount);
+    }
+    
+    function withdraw() onlyOwner onlyInEmergency public{
+        owner.transfer(address(this).balance);
     }
 
 }

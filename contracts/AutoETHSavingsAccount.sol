@@ -127,7 +127,8 @@ contract AutoETHSavingsAccount is Ownable, ReentrancyGuard{
     }
     // Through this function you will be making a normal payment to any external address or a wallet address as in the normal situation    
     function payETH(address payable _to, uint _amount, uint _pettyAmount) onlyOwner nonReentrant external returns (uint) {
-        require(balance > _amount + _pettyAmount + 20000000000000000, "the balance held by the Contract is less than the amount required to be paid");
+        uint grossPayableAmount = SafeMath.add(_amount, _pettyAmount);
+        require(balance > SafeMath.add(grossPayableAmount, 20000000000000000), "the balance held by the Contract is less than the amount required to be paid");
         balance = balance - _amount - _pettyAmount;
         savePettyCash(_pettyAmount);
         _to.transfer(_amount);

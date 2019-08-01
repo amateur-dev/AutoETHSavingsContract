@@ -24,9 +24,9 @@ class EmergencyWithdraw extends Component {
         );
 
         const contract = instance;
-        console.log("We got the instance and now calling the Toggle Emergency method")
+        console.log("We got the instance and now calling the Emergency Withdraw method")
         this.setState({ showLoader: true })
-        await contract.methods.withdraw().send({ from: account }).on("receipt", (receipt) => { console.log("the tx hash is", receipt["transactionHash"]); this.setState({ EmergencyWithdraw: receipt["transactionHash"], showLoader: false }) }).on('error', (error) => { alert(error); this.setState({ showLoader: false }) })
+        await contract.methods.withdraw().send({ from: account }).on("receipt", (receipt) => { console.log("the tx hash is", receipt["transactionHash"]); this.setState({ EmergencyWithdrawHash: receipt["transactionHash"], showLoader: false }) }).on('error', (error) => { alert(error); this.setState({ showLoader: false }) })
     };
     render() {
         // if (!this.state.web3) {
@@ -35,6 +35,9 @@ class EmergencyWithdraw extends Component {
         return (
             <div>
                 <button onClick={this.EmergencyWithdraw} className="ml-2 btn btn-danger" type="submit">Emergency Withdraw</button>
+                <br />
+                <label>You need to ensure that the Emergengy Switch is turn on, by using the Toggle Emergency Button above, before using this</label>
+                <br />
                 <br />
 
                 {this.state.showLoader ? <WorkingWithTheBlockchain /> : null}

@@ -26,7 +26,7 @@ class ToggleEmergency extends Component {
         const contract = instance;
         console.log("We got the instance and now calling the Toggle Emergency method")
         this.setState({ showLoader: true })
-        await contract.methods.toggleContractActive().send({ from: account }).on("receipt", (receipt) => { console.log("the tx hash is", receipt["transactionHash"]); this.setState({ ToggleEmergency: receipt["transactionHash"], showLoader: false }) }).on('error', (error) => { alert(error); this.setState({ showLoader: false }) })
+        await contract.methods.toggleContractActive().send({ from: account }).on("receipt", (receipt) => { console.log("the tx hash is", receipt["transactionHash"]); this.setState({ ToggleEmergencyHash: receipt["transactionHash"], showLoader: false }) }).on('error', (error) => { alert(error); this.setState({ showLoader: false }) })
     };
     render() {
         // if (!this.state.web3) {
@@ -36,6 +36,8 @@ class ToggleEmergency extends Component {
             <div>
                 <button onClick={this.ToggleEmergency} className="ml-2 btn btn-warning" type="submit">Toggle Emergency State</button>
                 <br />
+                <br />
+                
 
                 {this.state.showLoader ? <WorkingWithTheBlockchain /> : null}
 

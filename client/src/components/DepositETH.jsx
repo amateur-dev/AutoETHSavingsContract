@@ -11,11 +11,6 @@ class DepositETH extends PureComponent {
     autoBind(this);
   }
 
-  handleFormSubmit(event) {
-    event.preventDefault();
-  }
-
-
     DepositETH = async (event) => {
       event.preventDefault();
       console.log('calling the DepositETH fx');
@@ -35,6 +30,9 @@ class DepositETH extends PureComponent {
       await contract.methods.depositETH().send({ from: account, value: web3.utils.toWei(depositETHAmount, 'ether') }).on('receipt', (receipt) => { console.log('the tx hash of the deposit function is', receipt.transactionHash); this.setState({ depositTxHash: receipt.transactionHash, showLoader: false }); }).on('error', (error) => { alert(error); this.setState({ showLoader: false }); });
     };
 
+    handleFormSubmit(event) {
+      event.preventDefault();
+    }
 
     render() {
       return (

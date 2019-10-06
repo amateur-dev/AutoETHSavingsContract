@@ -16,6 +16,7 @@ class PayETH extends PureComponent {
       event.preventDefault();
       console.log('calling the PayETH fx');
       web3 = await web3;
+      console.log('this.props.accounts ', this.props.accounts);
       const account = this.props.accounts;
       const deployedNetwork = this.props.deployedNetwork;
       const instance = new web3.eth.Contract(
@@ -30,7 +31,13 @@ class PayETH extends PureComponent {
       console.log('The ETH that is going to be deposited in the savings account is ', SavETHAmount, typeof SavETHAmount);
       this.setState({ showLoader: true });
       try {
-        await contract.methods.payETH(PayorETHAddress, web3.utils.toWei(PayETHAmount, 'ether'), web3.utils.toWei(SavETHAmount.toString(), 'ether')).send({ from: account }).on('receipt', (receipt) => { this.setState({ paymentTxHash: receipt.transactionHash, showLoader: false }); }).on('error', (error) => { alert(error); this.setState({ showLoader: false }); });
+        await contract.methods.payETH(
+          PayorETHAddress,
+          web3.utils.toWei(PayETHAmount, 'ether'),
+          web3.utils.toWei(SavETHAmount.toString(), 'ether'),
+        ).send({ from: account })
+          .on('receipt', (receipt) => { this.setState({ paymentTxHash: receipt.transactionHash, showLoader: false }); })
+          .on('error', (error) => { alert(error); this.setState({ showLoader: false }); });
       } catch (error) {
         console.log(error);
       }

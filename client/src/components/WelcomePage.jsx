@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 
+import TransferMoney from './TransferMoney';
 import web3 from '../utils/getWeb3';
 
 class WelcomePage extends PureComponent {
@@ -65,24 +66,17 @@ class WelcomePage extends PureComponent {
         return (
           <>
             <h2 id="how-it-works">Welcome to Auto ETH Savings </h2>
-            <br />
             <h5>Your account Id: { accounts === '' ? 'No account associated currently.' : accounts } </h5>
             <h5>CurrentNetwork: {currentNetwork}</h5>
-            <p>
-              <strong>
-                <Link to={{
-                  pathname: '/FirstPage',
-                  state: { accounts: this.state.accounts, networkId: this.state.networkId },
-                }}
-                >
-                Transfer money
-                </Link>
-              </strong>
-            </p>
-            <a href="https://gitlab.com/amateur-dev/autoethsavingsaccountsc/blob/master/AutoETHSavingsSC">
-              View the contract
-            </a>
-        </>
+            <Link to={{ pathname: '/FirstPage', state: { accounts: this.state.accounts, networkId: this.state.networkId } }}>
+              Transfer money
+            </Link>
+            <br />
+            <TransferMoney
+              currentNetwork={currentNetwork}
+              accounts={accounts}
+            />
+          </>
         );
       }
       return (

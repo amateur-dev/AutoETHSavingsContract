@@ -4,28 +4,11 @@ const Web3 = require('web3');
 const web3 = new Web3(ganache.provider());
 const { abi, bytecode } = require('../client/src/contracts/AutoETHSavingsAccount');
 
-// // var accounts = null;
-// let AESC;
-// AllAccounts = async () => { await web3.eth.getAccounts().then(return resu }) };
-// const a = AllAccounts()
-// // AllAccounts = async () => { return await web3.eth.getAccounts().then((result) => { return result }) };
-// // let accounts = AllAccounts()
-// setTimeout(() => {
-//     console.log(a)
-// }, 1000);
-
-
-// let owner = accounts["0"];
-// console.log(owner)
-// let savingsAccount = accounts[1];
-// let payorAccount = accounts[2];
-
 beforeEach(async () => {
     // Get a list of all accounts
     accounts = await web3.eth.getAccounts();
 
-    // Use one of those accounts to deploy
-    // the contract
+    // Use one of those accounts to deploy the contract
     AESC = await new web3.eth.Contract(abi)
         .deploy({
             data: bytecode,

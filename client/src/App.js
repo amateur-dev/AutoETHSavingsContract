@@ -1,16 +1,15 @@
-import React, { Component } from "react";
-import Routes from "./Routes";
+import React, { PureComponent } from 'react';
+import Routes from './Routes';
 
-import "./App.css";
+import './App.css';
 
-class App extends Component {
-
+// eslint-disable-next-line react/prefer-stateless-function
+class App extends PureComponent {
   render() {
     return (
       <div className="App">
         <Routes />
       </div>
-
     );
   }
 }
